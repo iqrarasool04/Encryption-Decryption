@@ -1,21 +1,19 @@
 #creating bifid square using key
-def creatingBifidSquare(key):
-    square = [['' for i in range(5)] for j in range(5)]
+def creatingBifidSquare():
+    key = 'BGWKZQPNDSIOAXEFLCUMTHYVR'
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    key = key.upper().replace('J', 'I')  
-    key += alphabet
-    key = ''.join(dict.fromkeys(key))  
-    index = 0
-
-    for i in range(5):
-        for j in range(5):
-            square[i][j] = key[index]
-            index += 1
+    key = key.upper()
+    key = key.upper()
+    key_2d = [list(key[i:i+5]) for i in range(0, len(key), 5)]
+    square = key_2d
+    for row in key_2d:
+        print('\t'.join(row))
+    print(square)
 
     return square
 
-#encoding
-def bifidEncoding(message, square):
+#for plain text in numbers from cipher text
+def bifidDecodingNum(message, square):
     message = message.upper().replace('J', 'I')  
     num = []
     for char in message:
@@ -25,8 +23,8 @@ def bifidEncoding(message, square):
                     num.extend([i + 1, j + 1])
     return ' '.join(map(str, num))
 
-#decoding
-def bifidDecoding(encoded, square):
+#for plain text in alphabets from cipher text
+def bifidDecodingAlpha(encoded, square):
     num = list(map(int, encoded.split()))
     decoded = ''
     for i in range(0, len(num), 2):
@@ -38,8 +36,10 @@ def bifidDecoding(encoded, square):
 #calling functions
 key = 'BGWKCQPNDSIOAXEFCLUMTHYVR'
 Message = 'In cryptography the smallest mistakes can lead to the biggest secrets'
-bifidSquare = creatingBifidSquare(key)
-encodedMessage = bifidEncoding(Message, bifidSquare)
-print("Encoded:", encodedMessage)
-decodedMessage = bifidDecoding(encodedMessage, bifidSquare)
-print("Decoded:", decodedMessage)
+bifidSquare = creatingBifidSquare()
+print('Decoding:')
+encodedMessage = bifidDecodingNum(Message, bifidSquare)
+print("Plain Text (numbers):", encodedMessage)
+decodedMessage = bifidDecodingAlpha(encodedMessage, bifidSquare)
+print("Plain Text (alphabets):", decodedMessage)
+
